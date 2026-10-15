@@ -50,6 +50,14 @@
     <main>
         <h1>Clientes</h1>
 
+        @if (session('success'))
+        <p role="status">{{ session('success') }}</p>
+        @endif
+
+        <p>
+            <a href="{{ route('customers.create') }}">Novo cliente</a>
+        </p>
+
         <p>Total de clientes: {{ $customers->total() }}</p>
 
         <table>
