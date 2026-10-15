@@ -37,7 +37,7 @@ class UpdateCustomerRequest extends FormRequest
                 Rule::unique('customers', 'email')
                     ->ignore($this->route('customer')),
             ],
-            'phone' => ['required', 'string', 'max:30'],
+            'phone' => ['required', 'string', '15'],
             'photo' => [
                 'bail',
                 'nullable',

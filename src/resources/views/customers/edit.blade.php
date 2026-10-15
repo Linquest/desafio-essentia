@@ -6,50 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Editar cliente</title>
     <script src="{{ asset('js/customer-photo-preview.js') }}" defer></script>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 680px;
-            margin: 40px auto;
-            padding: 0 16px;
-        }
-
-        form {
-            display: grid;
-            gap: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 6px;
-        }
-
-        input {
-            box-sizing: border-box;
-            width: 100%;
-            padding: 8px;
-        }
-
-        .error {
-            color: #b91c1c;
-            margin: 6px 0 0;
-        }
-
-        .actions {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        button {
-            padding: 10px 16px;
-            cursor: pointer;
-        }
-    </style>
+    <script src="{{ asset('js/customer-phone-mask.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 
-<body>
+<body class="page--form">
     <main>
         <h1>Editar cliente</h1>
 
@@ -59,7 +20,7 @@
         </p>
         @endif
 
-        <form action="{{ route('customers.update', $customer) }}"
+        <form class="customer-form" action="{{ route('customers.update', $customer) }}"
             method="POST"
             enctype="multipart/form-data">
             @csrf
@@ -87,9 +48,10 @@
 
             <div>
                 <label for="phone">Telefone</label>
-                <input id="phone" name="phone" type="tel"
+                <input inputmode="numeric"
+                    placeholder="(48) 99999-9999" id="phone" name="phone" type="tel"
                     value="{{ is_string(old('phone', $customer->phone)) ? old('phone', $customer->phone) : '' }}"
-                    maxlength="30" autocomplete="tel" required>
+                    maxlength="15" autocomplete="tel" required>
                 @error('phone')
                 <p class="error">{{ $message }}</p>
                 @enderror
@@ -123,8 +85,13 @@
             </div>
 
             <div class="actions">
-                <button type="submit">Salvar</button>
-                <a href="{{ route('customers.index') }}">Cancelar</a>
+                <button class="button button--primary" type="submit">
+                    Salvar
+                </button>
+
+                <a class="button" href="{{ route('customers.index') }}">
+                    Cancelar
+                </a>
             </div>
         </form>
     </main>

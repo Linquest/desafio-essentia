@@ -5,124 +5,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Clientes</title>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 0 16px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th,
-        td {
-            padding: 12px;
-            border-bottom: 1px solid #ddd;
-            text-align: left;
-        }
-
-        .customer {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .customer img {
-            object-fit: cover;
-            border-radius: 6px;
-        }
-
-        .actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .actions form {
-            margin: 0;
-        }
-
-        .actions button {
-            padding: 6px 10px;
-            cursor: pointer;
-        }
-
-        nav {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-top: 24px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <script src="{{ asset('js/customer-phone-mask.js') }}" defer></script>
 </head>
 
-<body>
+<body class="page--list">
     <main>
         <h1>Clientes</h1>
 
         @if (session('success'))
-        <p role="status">{{ session('success') }}</p>
+        <p class="success" role="status">{{ session('success') }}</p>
         @endif
 
-        <p>
-            <a href="{{ route('customers.create') }}">Novo cliente</a>
-        </p>
+        <div class="list-toolbar">
+            <a class="button button--primary"
+                href="{{ route('customers.create') }}">
+                Novo cliente
+            </a>
 
-        <p>Total de clientes: {{ $customers->total() }}</p>
+            <p>Total de clientes: {{ $customers->total() }}</p>
+        </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">E-mail</th>
-                    <th scope="col">Telefone</th>
-                    <th scope="col">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($customers as $customer)
-                <tr>
-                    <td>
-                        <div class="customer">
-                            <img
-                                src="{{ asset('storage/' . $customer->photo_path) }}"
-                                alt="Foto de {{ $customer->name }}"
-                                width="48"
-                                height="48">
-                            <span>{{ $customer->name }}</span>
-                        </div>
-                    </td>
-                    <td>{{ $customer->email }}</td>
-                    <td>{{ $customer->phone }}</td>
-                    <td>
-                        <div class="actions">
-                            <a href="{{ route('customers.edit', $customer) }}">
-                                Editar
-                            </a>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col">Telefone</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($customers as $customer)
+                    <tr>
+                        <td>
+                            <div class="customer">
+                                <img
+                                    src="{{ asset('storage/' . $customer->photo_path) }}"
+                                    alt="Foto de {{ $customer->name }}"
+                                    width="48"
+                                    height="48">
+                                <span>{{ $customer->name }}</span>
+                            </div>
+                        </td>
+                        <td>{{ $customer->email }}</td>
+                        <td data-phone-mask>{{ $customer->phone }}</td>
+                        <td>
+                            <div class="actions">
+                                <a class="button" href="{{ route('customers.edit', $customer) }}">
+                                    Editar
+                                </a>
 
-                            <form action="{{ route('customers.destroy', $customer) }}"
-                                method="POST"
-                                onsubmit="return confirm('Deseja excluir este cliente? Esta ação não pode ser desfeita.');">
-                                @csrf
-                                @method('DELETE')
+                                <form action="{{ route('customers.destroy', $customer) }}"
+                                    method="POST"
+                                    onsubmit="return confirm('Deseja excluir este cliente? Esta ação não pode ser desfeita.');">
+                                    @csrf
+                                    @method('DELETE')
 
-                                <button type="submit">Excluir</button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="4">Nenhum cliente cadastrado.</td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
+                                    <button class="button button--danger" type="submit">Excluir</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="4">Nenhum cliente cadastrado.</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
 
         @if ($customers->hasPages())
         <nav aria-label="Paginação de clientes">

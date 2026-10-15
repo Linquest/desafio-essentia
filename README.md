@@ -12,6 +12,8 @@ de fotos para armazenamento local.
 - Exclusão com confirmação e remoção da foto correspondente.
 - Validação dos dados e mensagens em português.
 - E-mail único por cliente, normalizado para minúsculas.
+- Prévia da foto no cadastro e na edição, antes de salvar.
+- Formatação de telefones brasileiros no cadastro, na edição e na listagem.
 
 ## Tecnologias
 
@@ -20,6 +22,7 @@ de fotos para armazenamento local.
 - PostgreSQL 17.
 - Docker Compose para executar a aplicação e o banco.
 - Apache como servidor HTTP.
+- JavaScript nativo para a prévia das fotos e CSS compartilhado entre as telas.
 
 ## Modelo relacional
 

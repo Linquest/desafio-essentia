@@ -35,7 +35,7 @@ class StoreCustomerRequest extends FormRequest
                 'max:254',
                 'unique:customers,email',
             ],
-            'phone' => ['required', 'string', 'max:30'],
+            'phone' => ['required', 'string', 'max:15'],
             'photo' => [
                 'bail',
                 'required',
