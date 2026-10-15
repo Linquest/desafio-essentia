@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Novo cliente</title>
+    <script src="{{ asset('js/customer-photo-preview.js') }}" defer></script>
 
     <style>
         body {
@@ -94,13 +95,21 @@
             </div>
 
             <div>
+
+                <img
+                    id="photo-preview"
+                    alt="Prévia da foto do cliente"
+                    width="96"
+                    height="96"
+                    style="object-fit: cover; margin-bottom: 16px;"
+                    hidden>
                 <label for="photo">Foto</label>
                 <input id="photo" name="photo" type="file"
                     accept="image/jpeg,image/png,image/webp"
                     aria-describedby="photo-help" required>
                 <p id="photo-help">
                     JPEG, PNG ou WebP, até 2 MB.
-                    Dimensões máximas: 4096 × 4096 pixels.
+                    Dimensões máximas: 4096 x 4096 pixels.
                 </p>
                 @error('photo')
                 <p class="error">{{ $message }}</p>

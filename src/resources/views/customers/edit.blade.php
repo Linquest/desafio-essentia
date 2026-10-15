@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Editar cliente</title>
+    <script src="{{ asset('js/customer-photo-preview.js') }}" defer></script>
 
     <style>
         body {
@@ -95,14 +96,15 @@
             </div>
 
             <div>
-                <p>Foto atual</p>
+                <p>Prévia da foto</p>
 
                 <img
+                    id="photo-preview"
                     src="{{ asset('storage/' . $customer->photo_path) }}"
-                    alt="Foto de {{ $customer->name }}"
+                    alt="Prévia da foto do cliente"
                     width="96"
                     height="96"
-                    style="display: block; object-fit: cover; margin-bottom: 16px;">
+                    style="object-fit: cover; margin-bottom: 16px;">
 
                 <label for="photo">Substituir foto (opcional)</label>
                 <input id="photo" name="photo" type="file"
@@ -112,7 +114,7 @@
                 <p id="photo-help">
                     Sem selecionar outra imagem, a foto atual será mantida.
                     JPEG, PNG ou WebP, até 2 MB.
-                    Dimensões máximas: 4096 × 4096 pixels.
+                    Dimensões máximas: 4096 x 4096 pixels.
                 </p>
 
                 @error('photo')
