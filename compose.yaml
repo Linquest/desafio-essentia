@@ -1,0 +1,32 @@
+name: desafio-essentia
+
+services:
+  app:
+    build: .
+    image: desafio-essentia-app
+    ports:
+      - "127.0.0.1:8080:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./docker/apache.conf:/etc/apache2/sites-available/000-default.conf:ro
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:17-bookworm
+    environment:
+      POSTGRES_DB: essentia
+      POSTGRES_USER: essentia
+      POSTGRES_PASSWORD: essentia_local
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-h", "127.0.0.1", "-U", "essentia", "-d", "essentia"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+volumes:
+  postgres_data:
