@@ -37,6 +37,21 @@
             border-radius: 6px;
         }
 
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .actions form {
+            margin: 0;
+        }
+
+        .actions button {
+            padding: 6px 10px;
+            cursor: pointer;
+        }
+
         nav {
             display: flex;
             align-items: center;
@@ -85,9 +100,20 @@
                     <td>{{ $customer->email }}</td>
                     <td>{{ $customer->phone }}</td>
                     <td>
-                        <a href="{{ route('customers.edit', $customer) }}">
-                            Editar
-                        </a>
+                        <div class="actions">
+                            <a href="{{ route('customers.edit', $customer) }}">
+                                Editar
+                            </a>
+
+                            <form action="{{ route('customers.destroy', $customer) }}"
+                                method="POST"
+                                onsubmit="return confirm('Deseja excluir este cliente? Esta ação não pode ser desfeita.');">
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit">Excluir</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 @empty

@@ -127,4 +127,24 @@ class CustomerController extends Controller
         return to_route('customers.index')
             ->with('success', 'Cliente atualizado com sucesso.');
     }
+
+    public function destroy(Customer $customer): RedirectResponse
+    {
+        $photoPath = $customer->photo_path;
+
+        $customer->delete();
+
+        try {
+            if (!Storage::disk('public')->delete($photoPath)) {
+                Log::warning('Falha ao remover foto após exclusão do cliente.', [
+                    'photo_path' => $photoPath,
+                ]);
+            }
+        } catch (Throwable $cleanupException) {
+            report($cleanupException);
+        }
+
+        return to_route('customers.index')
+            ->with('success', 'Cliente excluído com sucesso.');
+    }
 }

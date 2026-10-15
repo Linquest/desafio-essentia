@@ -21,3 +21,7 @@ Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])
 Route::put('/customers/{customer}', [CustomerController::class, 'update'])
     ->whereNumber('customer')
     ->name('customers.update');
+
+Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])
+    ->whereNumber('customer')
+    ->name('customers.destroy');
