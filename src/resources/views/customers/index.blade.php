@@ -66,6 +66,7 @@
                     <th scope="col">Nome</th>
                     <th scope="col">E-mail</th>
                     <th scope="col">Telefone</th>
+                    <th scope="col">Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -83,10 +84,15 @@
                     </td>
                     <td>{{ $customer->email }}</td>
                     <td>{{ $customer->phone }}</td>
+                    <td>
+                        <a href="{{ route('customers.edit', $customer) }}">
+                            Editar
+                        </a>
+                    </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="3">Nenhum cliente cadastrado.</td>
+                    <td colspan="4">Nenhum cliente cadastrado.</td>
                 </tr>
                 @endforelse
             </tbody>

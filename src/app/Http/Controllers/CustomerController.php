@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
+use App\Http\Requests\UpdateCustomerRequest;
 use Throwable;
 
 class CustomerController extends Controller
@@ -62,5 +63,68 @@ class CustomerController extends Controller
 
         return to_route('customers.index')
             ->with('success', 'Cliente cadastrado com sucesso.');
+    }
+
+    public function edit(Customer $customer): View
+    {
+        return view('customers.edit', [
+            'customer' => $customer,
+        ]);
+    }
+
+    public function update(
+        UpdateCustomerRequest $request,
+        Customer $customer
+    ): RedirectResponse {
+        $data = $request->safe()->only(['name', 'email', 'phone']);
+
+        $oldPhotoPath = $customer->photo_path;
+        $newPhotoPath = null;
+
+        if ($request->hasFile('photo')) {
+            $newPhotoPath = $request->file('photo')
+                ->store('customers', 'public');
+
+            if ($newPhotoPath === false) {
+                throw ValidationException::withMessages([
+                    'photo' => 'Não foi possível salvar a foto. Tente novamente.',
+                ]);
+            }
+
+            $data['photo_path'] = $newPhotoPath;
+        }
+
+        try {
+            $customer->update($data);
+        } catch (Throwable $exception) {
+            if ($newPhotoPath !== null) {
+                try {
+                    if (!Storage::disk('public')->delete($newPhotoPath)) {
+                        Log::warning('Falha ao remover nova foto após erro na edição.', [
+                            'photo_path' => $newPhotoPath,
+                        ]);
+                    }
+                } catch (Throwable $cleanupException) {
+                    report($cleanupException);
+                }
+            }
+
+            throw $exception;
+        }
+
+        if ($newPhotoPath !== null) {
+            try {
+                if (!Storage::disk('public')->delete($oldPhotoPath)) {
+                    Log::warning('Falha ao remover foto antiga após edição.', [
+                        'photo_path' => $oldPhotoPath,
+                    ]);
+                }
+            } catch (Throwable $cleanupException) {
+                report($cleanupException);
+            }
+        }
+
+        return to_route('customers.index')
+            ->with('success', 'Cliente atualizado com sucesso.');
     }
 }

@@ -13,3 +13,11 @@ Route::get('/customers/create', [CustomerController::class, 'create'])
 
 Route::post('/customers', [CustomerController::class, 'store'])
     ->name('customers.store');
+
+Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])
+    ->whereNumber('customer')
+    ->name('customers.edit');
+
+Route::put('/customers/{customer}', [CustomerController::class, 'update'])
+    ->whereNumber('customer')
+    ->name('customers.update');
