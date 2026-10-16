@@ -11,8 +11,15 @@ preço e custo zero, sem consultar serviços externos de frete.
 
 ## Instalação
 
-Parta de uma instalação funcional do Magento, com suas dependências
-e banco de dados configurados.
+Para preparar um Magento do zero com Docker, siga o
+[guia do ambiente local](../../ambiente/README.md), que também
+inclui a cópia e a instalação deste módulo.
+
+As instruções abaixo são para uma instalação Magento já funcional,
+com suas dependências e banco de dados configurados.
+
+O módulo foi validado no Magento Open Source 2.4.8-p5, com PHP 8.4,
+em modo developer. A compatibilidade com outras versões não foi verificada.
 
 1. Copie a pasta `magento/Essentia/StorePickup` deste repositório
    para `app/code/Essentia/StorePickup` na instalação Magento.
