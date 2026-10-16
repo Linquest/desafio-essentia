@@ -19,6 +19,13 @@ Este ambiente utiliza credenciais de exemplo para desenvolvimento local.
 Somente o Nginx é publicado no computador, no endereço 127.0.0.1.
 O banco e o OpenSearch ficam na rede interna do Docker.
 
+Execute os comandos Docker deste guia na pasta `magento/ambiente`.
+Se abrir outro terminal, retorne a essa pasta antes de continuar.
+A partir da raiz do repositório, use `cd magento/ambiente`.
+
+As etapas executadas dentro do container são indicadas separadamente.
+Este ambiente utiliza reindexação manual e não configura tarefas cron.
+
 ## 1. Preparar os serviços
 
 No terminal do computador, a partir da raiz do repositório:
@@ -160,9 +167,12 @@ docker compose ps
 
 Use o endereço `127.0.0.1` configurado durante a instalação.
 
-A instalação começa sem produtos e sem pedidos.
-Siga o roteiro de validação manual no
-[README do módulo](../Essentia/StorePickup/README.md).
+O Magento e o módulo já estão instalados.
+A loja começa sem produtos e sem pedidos.
+
+Continue na seção
+[Validação manual realizada](../Essentia/StorePickup/README.md#validação-manual-realizada)
+do README do módulo.
 
 ## Uso após a primeira instalação
 

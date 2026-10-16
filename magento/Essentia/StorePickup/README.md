@@ -63,23 +63,42 @@ manter a coluna oculta. Nesse caso, selecione-a no menu **Columns**.
 ## Validação manual realizada
 
 1. Cadastrar um produto físico habilitado, visível e com estoque.
-2. Adicioná-lo ao carrinho e preencher os dados do checkout.
-3. Selecionar **Retirado na Loja / Retirada gratuita** e conferir
+
+2. Atualizar os índices após salvar o produto.
+
+   No ambiente Docker deste repositório, execute no terminal
+   do computador, a partir da raiz do repositório
+   (pasta que contém `src` e `magento`):
+
+   ```sh
+   docker compose -f magento/ambiente/compose.yaml exec --user www-data php php bin/magento indexer:reindex
+   ```
+
+   Para outro ambiente Magento, execute com o PHP da instalação,
+   na pasta onde está `bin/magento`:
+
+   ```sh
+   php bin/magento indexer:reindex
+   ```
+
+   Aguarde a conclusão antes de pesquisar o produto na loja.
+
+3. Pesquisar o produto, adicioná-lo ao carrinho e preencher
+   os dados do checkout.
+
+4. Selecionar **Retirado na Loja / Retirada gratuita** e conferir
    o frete zero.
-4. Finalizar o pedido com o pagamento offline **Check / Money order**.
-5. Em **Sales → Orders**, abrir o pedido e conferir a descrição
+
+5. Finalizar o pedido com o pagamento offline **Check / Money order**.
+
+6. Em **Sales → Orders**, abrir o pedido e conferir a descrição
    da entrega, o frete zero e o total.
-6. Na grade, filtrar **Shipping Information** por `Retirado na Loja`
-   e conferir a presença do pedido.
-7. Substituir o filtro por `inexistente` e conferir que nenhum
+
+7. Na grade de pedidos, exibir a coluna **Shipping Information**,
+   filtrar por `Retirado na Loja` e conferir a presença do pedido.
+
+8. Substituir o filtro por `inexistente` e conferir que nenhum
    pedido aparece. Remover o filtro ao final.
-
-Se um produto recém-cadastrado não aparecer na busca devido a
-índices pendentes, execute:
-
-```sh
-php bin/magento indexer:reindex
-```
 
 ## Decisões de implementação
 
