@@ -1,8 +1,19 @@
 # Desafio Backend — Essentia Group
 
-Sistema de cadastro de clientes desenvolvido em PHP com Laravel,
-seguindo o padrão MVC, com persistência em PostgreSQL e upload
-de fotos para armazenamento local.
+Este repositório reúne as duas tarefas do desafio técnico Backend Pleno.
+
+- **Tarefa 1 — Cadastro de clientes:** aplicação PHP com Laravel e Blade,
+  seguindo MVC, com PostgreSQL e upload de fotos para armazenamento local.
+  O código está em `src/`.
+- **Tarefa 2 — Retirado na Loja:** módulo Magento 2 que oferece retirada
+  gratuita, com identificação no pedido administrativo e na grade de
+  pedidos com filtro.
+
+A instalação, a versão testada e o roteiro de validação da Tarefa 2
+estão no [README do módulo Magento](magento/Essentia/StorePickup/README.md).
+
+As seções abaixo descrevem as funcionalidades, a instalação e o uso
+da **Tarefa 1**.
 
 ## Funcionalidades
 
